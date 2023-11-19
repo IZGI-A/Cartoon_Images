@@ -42,7 +42,7 @@ def edge_detection(image, k, sigma, epsilon):
 
     return thresholded_image
 
-
+""" PART 3 """
 def image_quantization(image, conversion, value):
     image_rgb = image.convert('RGB') #since original image is RGBA
     converted_image = image_rgb.convert(conversion)
@@ -63,9 +63,6 @@ def image_quantization(image, conversion, value):
         image_rgb_array[:, :, 1] = quantized_g
         image_rgb_array[:, :, 2] = quantized_b
 
-        # quantized_r = r.point(lambda i: i // value * value)
-        # quantized_g = g.point(lambda i: i // value * value)
-        # quantized_b = b.point(lambda i: i // value * value)
         quantized = Image.fromarray(image_rgb_array)
         return quantized  # Return the quantized image here for 'RGB' conversion
 
@@ -73,7 +70,7 @@ def image_quantization(image, conversion, value):
     quantized_image_rgb = quantized_image.convert('RGB')
     return quantized_image_rgb
 
-
+""" PART 4 """
 def combine_edges_quantized(edges, quantized):
     inverted_edges = 1 - edges
     #inverted_edge = Image.fromarray(np.uint8(inverted_edges))
@@ -95,11 +92,11 @@ output_folder = 'report/result/'
 
 filter_type = 'gaussian' # gaussian, median, uniform
 filter_parameter_value = 2 # sigma or kernel_size value
-k = 2
+k = 4
 sigma_value_for_edge_detection = 2
 epsilon = 50
 conversion_type = 'LAB' # it can be LAB, HSV, RGB
-quantization_value = 1
+quantization_value = 60
 
 """ ----------------------------------------------------"""
 
@@ -129,55 +126,29 @@ for i in range(1, 7):
 
     plt.subplots_adjust(wspace=0.03, hspace=0)
 
-    plt.subplot(1, 3, 1)
+    plt.subplot(1, 5, 1)
     plt.imshow(image)
     plt.title('Original Image')
     plt.axis('off')
 
-    # plt.subplot(1, 4, 2)
-    # plt.imshow(smooth_image)
-    # plt.title('Smoothed Image')
-    # plt.axis('off')
+    plt.subplot(1, 5, 2)
+    plt.imshow(smooth_image)
+    plt.title('Smoothed Image')
+    plt.axis('off')
 
-    plt.subplot(1, 3, 2)
+    plt.subplot(1, 5, 3)
+    plt.imshow(edge_detected_image, cmap='gray')
+    plt.title('Edged Image')
+    plt.axis('off')
+
+    plt.subplot(1, 5, 4)
     plt.imshow(quantized_image, cmap='gray')
     plt.title('Quantized Image')
     plt.axis('off')
 
-    plt.subplot(1, 3, 3)
+    plt.subplot(1, 5, 5)
     plt.imshow(final_image, cmap='gray')
     plt.title('Cartoon Image')
     plt.axis('off')
 
     plt.show()
-
-
-    # plt.subplot(2, 3, 1)
-    # plt.imshow(image)
-    # plt.title('Original Image')
-    # plt.axis('off')
-    #
-    # plt.subplot(2, 3, 2)
-    # plt.imshow(smooth_image)
-    # plt.title('Smoothed Image')
-    # plt.axis('off')
-    #
-    # plt.subplot(2, 3, 3)
-    # plt.imshow(edge_detected_image, cmap='gray')
-    # plt.title('Edge Image')
-    # plt.axis('off')
-    #
-    # plt.subplot(2, 3, 4)
-    # plt.imshow(quantized_image)
-    # plt.title('Quantized Image')
-    # plt.axis('off')
-    #
-    # plt.subplot(2, 3, 5)
-    # plt.imshow(final_image)
-    # plt.title('Cartoon Image')
-    # plt.axis('off')
-
-    #plt.tight_layout()
-    #plt.show()
-
-
